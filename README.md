@@ -1,7 +1,8 @@
-🐚 Custom Node.js Shell
+# 🐚 Custom Node.js Shell
 
 This is a simple interactive shell (REPL) built with Node.js that mimics basic Unix shell behavior. It supports a few shell builtins and can execute external programs by resolving them from your system's PATH.
-🚀 Features
+
+### 🚀 Features
 
     ✅ Simple prompt ($ )
 
@@ -19,7 +20,7 @@ This is a simple interactive shell (REPL) built with Node.js that mimics basic U
 
     ✅ Error handling if a command is not found
 
-🧠 How It Works
+### 🧠 How It Works
 
     Uses Node’s built-in modules:
     readline, child_process, fs, and path
@@ -32,38 +33,47 @@ This is a simple interactive shell (REPL) built with Node.js that mimics basic U
 
     If found, it spawns the command as a subprocess with child_process.spawn
 
-🔧 Example Usage
+### 🔧 Example Usage
 
-$ builtins
+```$ builtins
 builtins, echo, exit, type
+```
 
+```
 $ echo Hello world!
 Hello world!
+```
 
+```
 $ type echo
 echo is a shell builtin
+```
 
+```
 $ type ls
 ls is /bin/ls
+```
 
+```
 $ ls
 (file list output)
+```
 
+```
 $ exit 0
 
 # Shell exits
+```
 
-🛠️ Setup & Run
+### 🛠️ Setup & Run
 
     Ensure you have Node.js installed.
 
     Save the script in a file, e.g., shell.js
 
-    Run it using:
+    Run it using: node main.js
 
-node shell.js
-
-📂 Project Structure
+### 📂 Project Structure
 
     createInterface – for handling line input/output
 
@@ -77,13 +87,13 @@ node shell.js
 
     type() – resolves command types (builtin vs binary)
 
-📌 Notes
+### 📌 Notes
 
     This is a basic educational shell—there's no piping, redirection, or history.
 
     Intended as a learning project to explore how shells and command execution work.
 
-🧠 Learning Goals
+### 🧠 Learning Goals
 
     Understanding how PATH resolution works
 
@@ -93,7 +103,7 @@ node shell.js
 
     Building a modular command handling system
 
-📚 Inspired by
+### 📚 Inspired by
 
 Unix shell environments and educational tools like:
 
@@ -103,7 +113,7 @@ Unix shell environments and educational tools like:
 
     Node.js system module docs
 
-🪄 Next Steps / Ideas
+### 🪄 Next Steps / Ideas
 
     Add history (up/down arrows)
 
