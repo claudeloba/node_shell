@@ -11,17 +11,21 @@ const rl = createInterface({
 
 function findFilesInPaths(command) {
   const paths = process.env.PATH.split(path.delimiter);
-
   for (let dir of paths) {
     if (!dir) {
       continue;
     }
-    const files = readdirSync(dir);
-    if (files.includes(command)) {
-      return path.join(dir, command);
-    }
-    return command;
+
+    try {
+      const files = readdirSync(dir);
+
+      if (files.includes(command)) {
+        return path.join(dir, command);
+      }
+    } catch (e) {}
   }
+
+  return undefined;
 }
 
 function type(input) {
@@ -35,11 +39,12 @@ function type(input) {
   if (foundFile) {
     console.log(`${input} is ${foundFile}`);
   } else {
-    console.log(`${input}: command not found`);
+    console.log(`${input}: not found`);
   }
 }
 
 const shell = {
+  builtins: () => console.log(Object.keys(shell).join(", ")),
   echo: (input) => console.log(input),
   exit: (input) => {
     if (input === "0") {
@@ -51,16 +56,17 @@ const shell = {
 
 function execute(commandPath, argsString) {
   const argumentsArray = argsString === "" ? [] : argsString.split(" ");
-  const command = findFilesInPaths(commandPath);
+  const command = findFilesInPaths(commandPath) || commandPath;
 
   rl.pause();
 
   const childProcess = spawn(command, argumentsArray, {
     stdio: "inherit",
+    argv0: commandPath,
   });
 
   childProcess.on("error", (error) => {
-    process.stdout.write(`${command}: command not found\n`);
+    process.stdout.write(`${command}: not found\n`);
   });
 
   childProcess.on("close", () => {
@@ -90,6 +96,5 @@ rl.on("line", (line) => {
     execute(command, args);
   }
 }).on("close", () => {
-  console.log("Bye!");
   process.exit(0);
 });
